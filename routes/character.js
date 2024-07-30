@@ -26,9 +26,34 @@ router.post(
 router.get(
   "/",
   asyncHandler(async (req, res, next) => {
-    const character = await Character.find().exec();
+    const character = await Character.find().populate({ path: "photo" }).exec();
 
     res.json(character);
+  }),
+);
+
+router.get(
+  "/:mouseCoordinateX/:mouseCoordinateY",
+  asyncHandler(async (req, res, next) => {
+    const { mouseCoordinateX, mouseCoordinateY } = req.body;
+
+    console.log(mouseCoordinateX, mouseCoordinateY);
+
+    const character = await Character.find({
+      coordinateX: mouseCoordinateX,
+    }).exec();
+
+    if (character.coordinateX <= mouseCoordinateX) {
+      res.json("test");
+    }
+
+    // if (character === null) {
+    //   res.json("Target not found");
+    // } else {
+    //   res.json(`You found ${character.character_name}`);
+    // }
+
+    // res.json(character);
   }),
 );
 
