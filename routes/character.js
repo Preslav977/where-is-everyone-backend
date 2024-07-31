@@ -32,28 +32,32 @@ router.get(
   }),
 );
 
-router.get(
-  "/:mouseCoordinateX/:mouseCoordinateY",
+router.post(
+  "/:coordinates",
   asyncHandler(async (req, res, next) => {
-    const { mouseCoordinateX, mouseCoordinateY } = req.body;
+    const { id, lowerX, upperX, lowerY, upperY } = req.body;
 
-    console.log(mouseCoordinateX, mouseCoordinateY);
+    // console.log(id, lowerX, upperX, lowerY, upperY);
 
-    const character = await Character.find({
-      coordinateX: mouseCoordinateX,
-    }).exec();
+    const character = await Character.findById({ _id: id }).exec();
 
-    if (character.coordinateX <= mouseCoordinateX) {
-      res.json("test");
+    // console.log(character);
+
+    if (
+      character.coordinateX <= lowerX ||
+      character.coordinateX >= upperX ||
+      character.coordinateY <= lowerY ||
+      character.coordinateY >= upperY
+    ) {
+      res.json({ message: "Target not found" });
+    } else {
+      await Character.updateOne(
+        { _id: id },
+        { $set: { marked: false } },
+        // console.log(character),
+      );
+      res.json(`Found ${character.character_name}`);
     }
-
-    // if (character === null) {
-    //   res.json("Target not found");
-    // } else {
-    //   res.json(`You found ${character.character_name}`);
-    // }
-
-    // res.json(character);
   }),
 );
 
