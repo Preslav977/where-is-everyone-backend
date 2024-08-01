@@ -37,11 +37,7 @@ router.post(
   asyncHandler(async (req, res, next) => {
     const { id, lowerX, upperX, lowerY, upperY } = req.body;
 
-    // console.log(id, lowerX, upperX, lowerY, upperY);
-
-    const character = await Character.findById({ _id: id }).exec();
-
-    // console.log(character);
+    const character = await Character.findById(id).exec();
 
     if (
       character.coordinateX <= lowerX ||
@@ -51,12 +47,14 @@ router.post(
     ) {
       res.json({ message: "Target not found" });
     } else {
-      await Character.updateOne(
-        { _id: id },
-        { $set: { marked: false } },
-        // console.log(character),
+      const updateCharacterToMarked = await Character.findByIdAndUpdate(
+        id,
+        {
+          marked: true,
+        },
+        { new: true },
       );
-      res.json(`Found ${character.character_name}`);
+      res.json(updateCharacterToMarked);
     }
   }),
 );
