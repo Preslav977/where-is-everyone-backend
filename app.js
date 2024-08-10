@@ -11,6 +11,7 @@ const indexRouter = require("./routes/index");
 const usersRouter = require("./routes/users");
 const photoRouter = require("./routes/photo");
 const characterRouter = require("./routes/character");
+const sessionRouter = require("./routes/session");
 
 const app = express();
 
@@ -34,6 +35,7 @@ app.use(cors());
 app.use("/", photoRouter);
 app.use("/character", characterRouter);
 app.use("/users", usersRouter);
+app.use("/session", sessionRouter);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

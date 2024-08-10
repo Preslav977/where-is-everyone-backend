@@ -8,7 +8,7 @@ const CharacterModel = new Schema({
   character_image: { type: String, required: true },
   coordinateX: { type: Number, required: true },
   coordinateY: { type: Number, required: true },
-  marked: { type: Boolean, required: true },
+  marked: { type: Boolean, default: false, required: true },
 });
 
 module.exports = mongoose.model("Character", CharacterModel);
