@@ -7,10 +7,9 @@ const asyncHandler = require("express-async-handler");
 const Character = require("../models/character");
 
 router.post(
-  "/create",
+  "/",
   asyncHandler(async (req, res, next) => {
     const character = new Character({
-      photo: req.body.photo,
       character_name: req.body.character_name,
       character_image: req.body.character_image,
       coordinateX: req.body.coordinateX,
@@ -26,7 +25,7 @@ router.post(
 router.get(
   "/",
   asyncHandler(async (req, res, next) => {
-    const character = await Character.find().populate({ path: "photo" }).exec();
+    const character = await Character.find().populate().exec();
 
     res.json(character);
   }),

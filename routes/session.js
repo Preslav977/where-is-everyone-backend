@@ -6,11 +6,10 @@ const Session = require("../models/session");
 
 const Character = require("../models/character");
 
-router.post("/start", async (req, res, next) => {
+router.post("/", async (req, res, next) => {
   const session = new Session({
+    photo: req.body.photo,
     startTime: new Date(),
-    charactersFound: req.body.charactersFound,
-    score: 0,
   });
 
   await session.save();
@@ -18,7 +17,17 @@ router.post("/start", async (req, res, next) => {
   res.json(session);
 });
 
-router.post("/end/:id", async (req, res, next) => {
+router.get("/:id", async (req, res, next) => {
+  const { id } = req.body;
+
+  const session = await Session.findById(id)
+    .populate({ path: "photo", populate: { path: "characters" } })
+    .exec();
+
+  res.json(session);
+});
+
+router.put("/:id", async (req, res, next) => {
   const { id } = req.body;
 
   const characters = await Character.find({ marked: true }).exec();
@@ -41,13 +50,7 @@ router.post("/end/:id", async (req, res, next) => {
       { new: true },
     );
 
-    const updateScore = await Session.findByIdAndUpdate(
-      { _id: id },
-
-      { score: findEndTime.startTime - findEndTime.endTime },
-    );
-
-    res.json(updateScore);
+    res.json(findEndTime);
   }
 });
 

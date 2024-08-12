@@ -33,7 +33,7 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.use(cors());
 app.use("/", photoRouter);
-app.use("/character", characterRouter);
+app.use("/characters", characterRouter);
 app.use("/users", usersRouter);
 app.use("/session", sessionRouter);
 

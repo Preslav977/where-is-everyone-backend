@@ -11,6 +11,7 @@ router.post(
   asyncHandler(async (req, res, next) => {
     const photo = new Photo({
       image_link: req.body.image_link,
+      characters: req.body.characters,
     });
 
     await photo.save();
@@ -22,7 +23,7 @@ router.post(
 router.get(
   "/photos",
   asyncHandler(async (req, res, next) => {
-    const photo = await Photo.find().exec();
+    const photo = await Photo.find().populate("characters").exec();
 
     res.json(photo);
   }),
