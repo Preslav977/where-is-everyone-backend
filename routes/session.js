@@ -30,11 +30,17 @@ router.get("/:id", async (req, res, next) => {
 router.put("/:id", async (req, res, next) => {
   const { id } = req.body;
 
+  console.log(id);
+
   const characters = await Character.find({ marked: true }).exec();
+
+  console.log(characters);
 
   const filterMarkedCharacters = characters.filter(
     (char) => char.marked,
   ).length;
+
+  console.log(filterMarkedCharacters);
 
   if (filterMarkedCharacters === 3) {
     const updateEndTime = {
@@ -51,6 +57,8 @@ router.put("/:id", async (req, res, next) => {
     );
 
     res.json(findEndTime);
+  } else {
+    res.json("Game is still playing!");
   }
 });
 

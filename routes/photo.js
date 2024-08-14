@@ -23,7 +23,7 @@ router.post(
 router.get(
   "/photos",
   asyncHandler(async (req, res, next) => {
-    const photo = await Photo.find().populate("characters").exec();
+    const photo = await Photo.findOne().populate("characters").exec();
 
     res.json(photo);
   }),
