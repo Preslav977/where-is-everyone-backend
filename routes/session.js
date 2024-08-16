@@ -57,8 +57,6 @@ router.put("/:id", async (req, res, next) => {
     );
 
     res.json(findEndTime);
-  } else {
-    res.json("Game is still playing!");
   }
 });
 

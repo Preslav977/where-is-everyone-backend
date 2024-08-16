@@ -58,4 +58,10 @@ router.post(
   }),
 );
 
+router.put("/reset", async (req, res, next) => {
+  const character = await Character.updateMany({ $set: { marked: false } });
+
+  res.json(character);
+});
+
 module.exports = router;

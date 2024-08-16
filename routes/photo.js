@@ -29,4 +29,16 @@ router.get(
   }),
 );
 
+router.put("/photos/:id", async (req, res, next) => {
+  const { id } = req.body;
+
+  const character = await Photo.findByIdAndUpdate(
+    id,
+    { marked: false },
+    { new: true },
+  );
+
+  res.json(character);
+});
+
 module.exports = router;
