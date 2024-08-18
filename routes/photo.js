@@ -23,22 +23,18 @@ router.post(
 router.get(
   "/photos",
   asyncHandler(async (req, res, next) => {
-    const photo = await Photo.findOne().populate("characters").exec();
+    const photo = await Photo.find().populate("characters").exec();
 
     res.json(photo);
   }),
 );
 
-router.put("/photos/:id", async (req, res, next) => {
-  const { id } = req.body;
+router.get("/photos/:id", async (req, res, next) => {
+  const { id } = req.params;
 
-  const character = await Photo.findByIdAndUpdate(
-    id,
-    { marked: false },
-    { new: true },
-  );
+  const photo = await Photo.findById(id).populate("characters").exec();
 
-  res.json(character);
+  res.json(photo);
 });
 
 module.exports = router;
