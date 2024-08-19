@@ -34,6 +34,12 @@ router.post(
       res.json(user);
     }
   }),
+
+  router.get("/", async (req, res, next) => {
+    const users = await User.find().exec();
+
+    res.json(users);
+  }),
 );
 
 module.exports = router;

@@ -11,6 +11,7 @@ const usersRouter = require("./routes/users");
 const photoRouter = require("./routes/photo");
 const characterRouter = require("./routes/character");
 const sessionRouter = require("./routes/session");
+const leaderBoardRouter = require("./routes/leaderboard");
 
 const app = express();
 
@@ -35,6 +36,7 @@ app.use("/", photoRouter);
 app.use("/characters", characterRouter);
 app.use("/users", usersRouter);
 app.use("/session", sessionRouter);
+app.use("/leaderboard", leaderBoardRouter);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
