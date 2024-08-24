@@ -23,6 +23,16 @@ async function main() {
   await mongoose.connect(mongoDB);
 }
 
+app.use(
+  cors({
+    origin: [
+      "http://localhost:5173",
+      "https://where-is-everyone-frontend.vercel.app/",
+    ],
+    credentials: true,
+  }),
+);
+
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "pug");
@@ -33,7 +43,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
-app.use(cors());
+// app.use(cors());
 app.use("/", gameRouter);
 app.use("/characters", characterRouter);
 app.use("/users", usersRouter);
