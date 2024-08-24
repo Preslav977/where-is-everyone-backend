@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
 const SessionModel = new Schema({
-  photo: { type: mongoose.SchemaTypes.ObjectId, ref: "Photo" },
+  game: { type: mongoose.SchemaTypes.ObjectId, ref: "Game" },
   startTime: { type: Date },
   endTime: { type: Date },
 });

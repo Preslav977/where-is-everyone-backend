@@ -8,7 +8,7 @@ const Character = require("../models/character");
 
 router.post("/", async (req, res, next) => {
   const session = new Session({
-    photo: req.body.photo,
+    game: req.body.game,
     startTime: new Date(),
   });
 
@@ -21,7 +21,7 @@ router.get("/:id", async (req, res, next) => {
   const { id } = req.body;
 
   const session = await Session.findById(id)
-    .populate({ path: "photo", populate: { path: "characters" } })
+    .populate({ path: "game", populate: { path: "characters" } })
     .exec();
 
   res.json(session);

@@ -8,7 +8,7 @@ const mongoose = require("mongoose");
 
 const cors = require("cors");
 const usersRouter = require("./routes/users");
-const photoRouter = require("./routes/photo");
+const gameRouter = require("./routes/game");
 const characterRouter = require("./routes/character");
 const sessionRouter = require("./routes/session");
 const leaderBoardRouter = require("./routes/leaderboard");
@@ -32,7 +32,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
 app.use(cors());
-app.use("/", photoRouter);
+app.use("/", gameRouter);
 app.use("/characters", characterRouter);
 app.use("/users", usersRouter);
 app.use("/session", sessionRouter);

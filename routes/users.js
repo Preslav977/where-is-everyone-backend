@@ -5,6 +5,7 @@ const router = express.Router();
 const asyncHandler = require("express-async-handler");
 
 const { body, validationResult } = require("express-validator");
+
 const User = require("../models/user");
 
 router.post(
@@ -22,7 +23,8 @@ router.post(
     const user = new User({
       username: req.body.username,
       score: req.body.score,
-      photo: req.body.photo,
+      game: req.body.game,
+      date: new Date(),
     });
 
     if (!errors.isEmpty()) {

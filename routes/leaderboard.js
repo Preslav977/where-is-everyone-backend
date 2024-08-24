@@ -15,15 +15,13 @@ router.post("/", async (req, res, next) => {
 });
 
 router.get("/", async (req, res, next) => {
-  const leaderboard = await LeaderBoard.find().populate("photo").exec();
+  const leaderboard = await LeaderBoard.find().populate("users").exec();
 
   res.json(leaderboard);
 });
 
 router.post("/:id", async (req, res, next) => {
   const { id, userId } = req.body;
-
-  console.log(id);
 
   const leaderboard = await LeaderBoard.findById(id).exec();
 
