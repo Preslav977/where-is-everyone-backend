@@ -27,7 +27,7 @@ app.use(
   cors({
     origin: [
       "http://localhost:5173",
-      "https://where-is-everyone-frontend.vercel.app/",
+      "https://where-is-everyone-frontend.vercel.app",
     ],
     credentials: true,
   }),
