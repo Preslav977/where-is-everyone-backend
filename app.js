@@ -15,11 +15,18 @@ const leaderBoardRouter = require("./routes/leaderboard");
 
 const app = express();
 
-const mongoDB = process.env.mongoURL;
+const dev_db_url = process.env.mongoURL;
+const mongoDB = process.env.MONGODB_URI || dev_db_url;
 
 mongoose.connect(mongoDB);
-const db = mongoose.connection;
-db.on("error", console.error.bind(console, "mongo connection error"));
+
+// const db = mongoose.connection;
+// db.on("error", console.error.bind(console, "mongo connection error"));
+
+main().catch((err) => console.log(err));
+async function main() {
+  await mongoose.connect(mongoDB);
+}
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
