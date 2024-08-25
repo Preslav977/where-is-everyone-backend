@@ -2,7 +2,7 @@
   "name": "express-template-repository",
   "version": "0.0.0",
   "engines": {
-    "node": ">=16.14"
+    "node": ">=16.20.1"
   },
   "private": true,
   "scripts": {
