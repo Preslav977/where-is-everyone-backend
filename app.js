@@ -17,8 +17,12 @@ const app = express();
 
 const mongoDB = process.env.mongoURL;
 
+console.log(mongoDB);
+
 mongoose.connect(mongoDB);
+
 const db = mongoose.connection;
+
 db.on("error", console.error.bind(console, "mongo connection error"));
 
 // app.use(
