@@ -15,23 +15,21 @@ const leaderBoardRouter = require("./routes/leaderboard");
 
 const app = express();
 
-const dev_db_url = process.env.mongoURL;
-const mongoDB = process.env.MONGODB_URI || dev_db_url;
+const mongoDB = process.env.mongoURL;
 
-main().catch((err) => console.log(err));
-async function main() {
-  await mongoose.connect(mongoDB);
-}
+mongoose.connect(mongoDB);
+const db = mongoose.connection;
+db.on("error", console.error.bind(console, "mongo connection error"));
 
-app.use(
-  cors({
-    origin: [
-      "http://localhost:5173",
-      "https://where-is-everyone-frontend.vercel.app",
-    ],
-    credentials: true,
-  }),
-);
+// app.use(
+//   cors({
+//     origin: [
+//       "http://localhost:5173",
+//       "https://where-is-everyone-frontend.vercel.app",
+//     ],
+//     // credentials: true,
+//   }),
+// );
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
@@ -43,7 +41,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
-// app.use(cors());
+app.use(cors());
 app.use("/", gameRouter);
 app.use("/characters", characterRouter);
 app.use("/users", usersRouter);
