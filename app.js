@@ -15,7 +15,7 @@ const leaderBoardRouter = require("./routes/leaderboard");
 
 const app = express();
 
-const mongoDB = process.env.mongoURL;
+const mongoDB = process.env.MONGO_URL;
 
 console.log(mongoDB);
 
