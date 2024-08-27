@@ -9,6 +9,7 @@ const Character = require("../models/character");
 router.post("/", async (req, res, next) => {
   const session = new Session({
     game: req.body.game,
+    foundCharacters: [],
     startTime: new Date(),
   });
 
@@ -27,18 +28,32 @@ router.get("/:id", async (req, res, next) => {
   res.json(session);
 });
 
+router.post("/:id", async (req, res, next) => {
+  const { id, characterId } = req.body;
+
+  const session = await Session.findById(id).exec();
+
+  const character = await Character.findById(characterId).exec();
+
+  console.log(character);
+
+  if (character) {
+    session.foundCharacters.push(character);
+
+    await session.save();
+  }
+
+  res.json(session);
+});
+
 router.put("/:id", async (req, res, next) => {
   const { id } = req.body;
 
   console.log(id);
 
-  const characters = await Character.find({ marked: true }).exec();
+  const session = await Session.findById(id).exec();
 
-  console.log(characters);
-
-  const filterMarkedCharacters = characters.filter(
-    (char) => char.marked,
-  ).length;
+  const filterMarkedCharacters = session.foundCharacters.length;
 
   console.log(filterMarkedCharacters);
 

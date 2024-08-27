@@ -31,37 +31,37 @@ router.get(
   }),
 );
 
-router.post(
-  "/:coordinates",
-  asyncHandler(async (req, res, next) => {
-    const { id, lowerX, upperX, lowerY, upperY } = req.body;
+// router.post(
+//   "/:coordinates",
+//   asyncHandler(async (req, res, next) => {
+//     const { id, lowerX, upperX, lowerY, upperY } = req.body;
 
-    const character = await Character.findById(id).exec();
+//     const character = await Character.findById(id).exec();
 
-    if (
-      character.coordinateX <= lowerX ||
-      character.coordinateX >= upperX ||
-      character.coordinateY <= lowerY ||
-      character.coordinateY >= upperY
-    ) {
-      res.json({ message: "Target not found" });
-    } else {
-      const updateCharacterToMarked = await Character.findByIdAndUpdate(
-        id,
-        {
-          marked: true,
-        },
-        { new: true },
-      );
-      res.json(updateCharacterToMarked);
-    }
-  }),
-);
+//     if (
+//       character.coordinateX <= lowerX ||
+//       character.coordinateX >= upperX ||
+//       character.coordinateY <= lowerY ||
+//       character.coordinateY >= upperY
+//     ) {
+//       res.json({ message: "Target not found" });
+//     } else {
+//       const updateCharacterToMarked = await Character.findByIdAndUpdate(
+//         id,
+//         {
+//           marked: true,
+//         },
+//         { new: true },
+//       );
+//       res.json(updateCharacterToMarked);
+//     }
+//   }),
+// );
 
-router.put("/reset", async (req, res, next) => {
-  const character = await Character.updateMany({ $set: { marked: false } });
+// router.put("/reset", async (req, res, next) => {
+//   const character = await Character.updateMany({ $set: { marked: false } });
 
-  res.json(character);
-});
+//   res.json(character);
+// });
 
 module.exports = router;

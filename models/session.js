@@ -3,7 +3,8 @@ const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
 const SessionModel = new Schema({
-  game: { type: mongoose.SchemaTypes.ObjectId, ref: "Game" },
+  game: { type: Schema.Types.ObjectId, ref: "Game" },
+  foundCharacters: [{ type: Schema.Types.ObjectId, ref: "Character" }],
   startTime: { type: Date },
   endTime: { type: Date },
 });

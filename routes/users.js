@@ -23,7 +23,7 @@ router.post(
     const user = new User({
       username: req.body.username,
       score: req.body.score,
-      game: req.body.game,
+      // game: req.body.game,
       date: new Date(),
     });
 

@@ -17,8 +17,6 @@ const app = express();
 
 const mongoDB = process.env.MONGO_URL;
 
-console.log(mongoDB);
-
 mongoose.connect(mongoDB);
 
 const db = mongoose.connection;

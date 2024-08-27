@@ -2,6 +2,7 @@ const express = require("express");
 
 const router = express.Router();
 
+const { ObjectId } = require("mongodb");
 const Game = require("../models/game");
 
 router.post(
@@ -44,6 +45,53 @@ router.get("/game/:id", async (req, res, next) => {
     .exec();
 
   res.json(game);
+});
+
+router.post("/game/:coordinates", async (req, res, next) => {
+  const { id, characterId, lowerX, upperX, lowerY, upperY } = req.body;
+
+  console.log(id);
+
+  const game = await Game.findById(id).populate("characters").exec();
+  const [characterOne, characterTwo, characterThree] = game.characters;
+  // if (
+  //   characterOne.coordinateX <= lowerX ||
+  //   characterOne.coordinateX >= upperX ||
+  //   characterOne.coordinateY <= lowerY ||
+  //   characterOne.coordinateY >= upperY
+  // ) {
+  //   res.json({ message: "Target not found" });
+  // } else {
+  //   const updateCharacterToMarked = await Game.findById(id).populate(
+  //     "characters",
+  //   )(
+  //     { _id: id },
+  //     {
+  //       $set: { "characters.$[1].marked": true },
+  //     },
+  //     { arrayFilters: [{ "$[0].marked": false }] },
+  //   );
+  //   res.json(updateCharacterToMarked);
+  // }
+
+  if (
+    characterOne.coordinateX <= lowerX ||
+    characterOne.coordinateX >= upperX ||
+    characterOne.coordinateY <= lowerY ||
+    characterOne.coordinateY >= upperY
+  ) {
+    res.json({ message: "Target not found" });
+  } else if (ObjectId.isValid(id)) {
+    const updateCharacterToMarked = await Game.updateOne(
+      { _id: characterId },
+      {
+        $set: { "characters.$[0].marked": true },
+      },
+
+      { arrayFilters: [{ "$[0].marked": false }], new: true },
+    ).populate("characters");
+    res.json(updateCharacterToMarked);
+  }
 });
 
 module.exports = router;
