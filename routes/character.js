@@ -18,6 +18,7 @@ router.post(
     });
 
     await character.save();
+
     res.json(character);
   }),
 );
@@ -31,32 +32,36 @@ router.get(
   }),
 );
 
-// router.post(
-//   "/:coordinates",
-//   asyncHandler(async (req, res, next) => {
-//     const { id, lowerX, upperX, lowerY, upperY } = req.body;
+router.post(
+  "/:coordinates",
+  asyncHandler(async (req, res, next) => {
+    const { id, lowerX, upperX, lowerY, upperY } = req.body;
 
-//     const character = await Character.findById(id).exec();
+    console.log(id, lowerX, upperX, lowerY, upperY);
 
-//     if (
-//       character.coordinateX <= lowerX ||
-//       character.coordinateX >= upperX ||
-//       character.coordinateY <= lowerY ||
-//       character.coordinateY >= upperY
-//     ) {
-//       res.json({ message: "Target not found" });
-//     } else {
-//       const updateCharacterToMarked = await Character.findByIdAndUpdate(
-//         id,
-//         {
-//           marked: true,
-//         },
-//         { new: true },
-//       );
-//       res.json(updateCharacterToMarked);
-//     }
-//   }),
-// );
+    const character = await Character.findById(id).exec();
+
+    console.log(character);
+
+    if (
+      character.coordinateX <= lowerX ||
+      character.coordinateX >= upperX ||
+      character.coordinateY <= lowerY ||
+      character.coordinateY >= upperY
+    ) {
+      res.json({ message: "Target not found" });
+    } else {
+      const updateCharacterToMarked = await Character.findByIdAndUpdate(
+        id,
+        {
+          marked: true,
+        },
+        { new: true },
+      );
+      res.json(updateCharacterToMarked);
+    }
+  }),
+);
 
 // router.put("/reset", async (req, res, next) => {
 //   const character = await Character.updateMany({ $set: { marked: false } });
