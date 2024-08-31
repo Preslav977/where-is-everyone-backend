@@ -2,71 +2,31 @@ const express = require("express");
 
 const router = express.Router();
 
-const asyncHandler = require("express-async-handler");
-
 const Character = require("../models/character");
 
-router.post(
-  "/",
-  asyncHandler(async (req, res, next) => {
-    const character = new Character({
-      character_name: req.body.character_name,
-      character_image: req.body.character_image,
-      coordinateX: req.body.coordinateX,
-      coordinateY: req.body.coordinateY,
-      marked: req.body.marked,
-    });
+router.post("/", async (req, res, next) => {
+  const character = new Character({
+    game: req.body.game,
+    character_name: req.body.character_name,
+    character_image: req.body.character_image,
+    coordinateX: req.body.coordinateX,
+    coordinateY: req.body.coordinateY,
+    marked: false,
+  });
 
-    await character.save();
+  await character.save();
 
-    res.json(character);
-  }),
-);
+  res.json(character);
+});
 
-router.get(
-  "/",
-  asyncHandler(async (req, res, next) => {
-    const character = await Character.find().populate().exec();
+router.get("/:game", async (req, res, next) => {
+  const { game } = req.params;
 
-    res.json(character);
-  }),
-);
+  console.log(game);
 
-router.post(
-  "/:coordinates",
-  asyncHandler(async (req, res, next) => {
-    const { id, lowerX, upperX, lowerY, upperY } = req.body;
+  const character = await Character.find({ game }).exec();
 
-    console.log(id, lowerX, upperX, lowerY, upperY);
-
-    const character = await Character.findById(id).exec();
-
-    console.log(character);
-
-    if (
-      character.coordinateX <= lowerX ||
-      character.coordinateX >= upperX ||
-      character.coordinateY <= lowerY ||
-      character.coordinateY >= upperY
-    ) {
-      res.json({ message: "Target not found" });
-    } else {
-      const updateCharacterToMarked = await Character.findByIdAndUpdate(
-        id,
-        {
-          marked: true,
-        },
-        { new: true },
-      );
-      res.json(updateCharacterToMarked);
-    }
-  }),
-);
-
-// router.put("/reset", async (req, res, next) => {
-//   const character = await Character.updateMany({ $set: { marked: false } });
-
-//   res.json(character);
-// });
+  res.json(character);
+});
 
 module.exports = router;

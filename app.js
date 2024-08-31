@@ -23,16 +23,6 @@ const db = mongoose.connection;
 
 db.on("error", console.error.bind(console, "mongo connection error"));
 
-// app.use(
-//   cors({
-//     origin: [
-//       "http://localhost:5173",
-//       "https://where-is-everyone-frontend.vercel.app",
-//     ],
-//     // credentials: true,
-//   }),
-// );
-
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "pug");
