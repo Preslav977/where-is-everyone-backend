@@ -32,44 +32,40 @@ router.get("/:id", async (req, res, next) => {
 router.post("/:coordinates", async (req, res, next) => {
   const { id, characterId, lowerX, upperX, lowerY, upperY } = req.body;
 
-  const session = await Session.findById(id).populate("characters").exec();
-
-  const characters = await Character.findById(characterId).exec();
-
-  console.log(session, characters);
+  const [session, character] = await Promise.all([
+    await Session.findById(id).exec(),
+    await Character.findById(characterId).exec(),
+  ]);
 
   if (
-    characters.coordinateX <= lowerX ||
-    characters.coordinateX >= upperX ||
-    characters.coordinateY <= lowerY ||
-    characters.coordinateY >= upperY
+    character.coordinateX <= lowerX ||
+    character.coordinateX >= upperX ||
+    character.coordinateY <= lowerY ||
+    character.coordinateY >= upperY
   ) {
     res.json({ message: "Target not found" });
   } else {
-    //   const updateCharacterToMarked = await Session.findByIdAndUpdate(
-    //     id,
-    //     {
-    //       $set: { "characters.$[c].marked": true },
-    //     },
-    //     { arrayFilters: [{ "c.character_name": characterName }], new: true },
-    //   );
-    //   res.json(updateCharacterToMarked);
-    res.json({ ...characters, marked: true });
+    session.characters = session.characters.map((char) => {
+      if (char.id === characterId) {
+        return { ...char, marked: true };
+      }
+
+      return char;
+    });
+    await session.save();
+
+    res.json(session.characters);
   }
 });
 
 router.put("/:id", async (req, res, next) => {
   const { id } = req.body;
 
-  console.log(id);
-
   const session = await Session.findById(id).exec();
 
   const filterMarkedCharacters = session.characters.filter(
     (char) => char.marked,
   ).length;
-
-  console.log(filterMarkedCharacters);
 
   if (filterMarkedCharacters === 3) {
     const updateEndTime = {
