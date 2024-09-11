@@ -38,6 +38,22 @@ async function initializeMongoServer() {
 
   // console.log(leaderboardGameOne);
 
+  const leaderboardGameTwo = new Leadeboard({
+    _id: "66e14bd5679fb674bc5822e2",
+    users: [],
+  });
+
+  await leaderboardGameTwo.save();
+
+  const leaderboardGameThree = Leadeboard({
+    _id: "66e14d08f933d36a6765a954",
+    users: [],
+  });
+
+  await leaderboardGameThree.save();
+
+  // console.log(leaderboardGameThree);
+
   const user = new User({
     _id: "66e136358f6e7d2b7ed1dc11",
     username: "user",
@@ -47,7 +63,16 @@ async function initializeMongoServer() {
 
   await user.save();
 
-  // console.log(user);
+  const gameOne = new Game({
+    _id: "66e14f7d0bd6bb687c90b430",
+    image_link: "http://localhost:3000/dragon-charmers-island.jpg",
+    game_name: "Dragon Charmer's Island",
+    leaderboard: "66e136c6b03890319064c08a",
+  });
+
+  await gameOne.save();
+
+  // console.log(gameOne);
 }
 
 module.exports = initializeMongoServer;
