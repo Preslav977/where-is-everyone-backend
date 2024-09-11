@@ -16,7 +16,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use("/", gameRouter);
 
-describe("testing the game routers and controller", () => {
+describe("testing the game routers and controllers", () => {
   beforeAll(() => initializeMongoServer());
 
   afterAll((done) => {

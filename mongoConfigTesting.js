@@ -73,6 +73,39 @@ async function initializeMongoServer() {
   await gameOne.save();
 
   // console.log(gameOne);
+
+  const raftMan = new Characters({
+    game: "66e14f7d0bd6bb687c90b430",
+    character_name: "Raft Man",
+    character_image: "http://localhost:3000/raft-man.png",
+    coordinateX: 5.117493473,
+    coordinateY: 42.176823558,
+    marked: false,
+  });
+
+  await raftMan.save();
+
+  const dragon = new Characters({
+    game: "66e14f7d0bd6bb687c90b430",
+    character_name: "Dragon",
+    character_image: "http://localhost:3000/dragon.png",
+    coordinateX: 66.266318538,
+    coordinateY: 42.509798481,
+    marked: false,
+  });
+
+  await dragon.save();
+
+  const wizard = new Characters({
+    game: "66e14f7d0bd6bb687c90b430",
+    character_name: "Wizard",
+    character_image: "http://localhost:3000/wizard.png",
+    coordinateX: 75.874673629,
+    coordinateY: 65.855040292,
+    marked: false,
+  });
+
+  await wizard.save();
 }
 
 module.exports = initializeMongoServer;
