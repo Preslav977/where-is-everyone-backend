@@ -25,7 +25,7 @@ describe("testing leaderboard routes and controllers", () => {
     done();
   });
 
-  test("testing if leaderboard can be fetched", async () => {
+  test("testing if leaderboard object can be fetched", async () => {
     const response = await request(app).get("/leaderboard");
 
     expect(response.header["content-type"]).toMatch(/json/);
