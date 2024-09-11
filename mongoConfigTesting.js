@@ -75,6 +75,7 @@ async function initializeMongoServer() {
   // console.log(gameOne);
 
   const raftMan = new Characters({
+    _id: "66e16828d98682c1bc4f9521",
     game: "66e14f7d0bd6bb687c90b430",
     character_name: "Raft Man",
     character_image: "http://localhost:3000/raft-man.png",
@@ -85,7 +86,10 @@ async function initializeMongoServer() {
 
   await raftMan.save();
 
+  // console.log(raftMan);
+
   const dragon = new Characters({
+    _id: "66e1666f014cd8d11fbe255f",
     game: "66e14f7d0bd6bb687c90b430",
     character_name: "Dragon",
     character_image: "http://localhost:3000/dragon.png",
@@ -96,7 +100,10 @@ async function initializeMongoServer() {
 
   await dragon.save();
 
+  // console.log(dragon);
+
   const wizard = new Characters({
+    _id: "66e1666f014cd8d11fbe2561",
     game: "66e14f7d0bd6bb687c90b430",
     character_name: "Wizard",
     character_image: "http://localhost:3000/wizard.png",
@@ -106,6 +113,31 @@ async function initializeMongoServer() {
   });
 
   await wizard.save();
+
+  // console.log(wizard);
+
+  const session = new Session({
+    _id: "66e16a5bdaf6641cdf3f5311",
+    game: "66e14f7d0bd6bb687c90b430",
+    characters: [
+      {
+        character: "66e16828d98682c1bc4f9521",
+        _id: "66e16828d98682c1bc4f9521",
+      },
+      {
+        character: "66e1666f014cd8d11fbe255f",
+        _id: "66e1666f014cd8d11fbe255f",
+      },
+      {
+        character: "66e1666f014cd8d11fbe2561",
+        _id: "66e1666f014cd8d11fbe2561",
+      },
+    ],
+  });
+
+  await session.save();
+
+  // console.log(session);
 }
 
 module.exports = initializeMongoServer;
