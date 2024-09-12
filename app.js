@@ -27,7 +27,11 @@ app.use(helmet());
 
 app.use(limiter);
 
-app.use(cors());
+app.use(
+  cors({
+    origin: ["https://where-is-everyone-frontend.vercel.app"],
+  }),
+);
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
