@@ -5,8 +5,11 @@ const path = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const cors = require("cors");
-const mongoose = require("./mongoConfig");
 
+const compression = require("compression");
+const helmet = require("helmet");
+const RateLimit = require("express-rate-limit");
+const mongoose = require("./mongoConfig");
 const usersRouter = require("./routes/users");
 const gameRouter = require("./routes/game");
 const characterRouter = require("./routes/character");
@@ -14,6 +17,17 @@ const sessionRouter = require("./routes/session");
 const leaderBoardRouter = require("./routes/leaderboard");
 
 const app = express();
+
+const limiter = RateLimit({
+  windowMs: 15 * 60 * 1000,
+  limit: 100,
+});
+
+app.use(helmet());
+
+app.use(limiter);
+
+app.use(cors());
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
@@ -25,7 +39,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
-app.use(cors());
+app.use(compression());
+
 app.use("/", gameRouter);
 app.use("/characters", characterRouter);
 app.use("/users", usersRouter);
