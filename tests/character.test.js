@@ -30,8 +30,6 @@ describe("testing the game routers and controllers", () => {
       "/characters/66e14f7d0bd6bb687c90b430",
     );
 
-    console.log(response.body);
-
     expect(response.header["content-type"]).toMatch(/json/);
 
     expect(response.body[0]._id).toBe(response.body[0]._id);

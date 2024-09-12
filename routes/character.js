@@ -22,8 +22,6 @@ router.post("/", async (req, res, next) => {
 router.get("/:game", async (req, res, next) => {
   const { game } = req.params;
 
-  console.log(game);
-
   const character = await Character.find({ game }).exec();
 
   res.json(character);
