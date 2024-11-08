@@ -9,6 +9,11 @@ This is the backend of the project. Created with MongoDB, Express, and Node.
 Photo tagging game that receives the coordinates on the characters from the frontend and validates them on the server, and depending on whether the character is found or not, it will change the marked property to true.
 The server also checks if the game is done if all characters are found; otherwise, the user may refresh to start a new game or close and minimize the browser, which will not be able to end the game until the characters are found.
 
+# Live Previews
+
+- [View the live site here](https://where-is-everyone-frontend.vercel.app/)
+- [View the front-end repository here](https://github.com/Preslav977/where-is-everyone-frontend)
+
 # Features
 
 - Character validation on the characters to the backend
