@@ -29,7 +29,10 @@ app.use(limiter);
 
 app.use(
   cors({
-    origin: ["https://where-is-everyone-frontend.vercel.app"],
+    origin: [
+      "https://where-is-everyone-backend.vercel.app",
+      "https://where-is-everyone-frontend.vercel.app",
+    ],
   }),
 );
 
